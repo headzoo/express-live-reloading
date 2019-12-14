@@ -29,6 +29,13 @@ if( !(io instanceof Function) )
                 style.href
             ) ) )
         ;
+        socket.emit(
+            'script' ,
+            [ ...document.querySelectorAll('script') ]
+            .map( script => (
+                script.src
+            ) ) )
+        ;
 
     } ) ;
 
