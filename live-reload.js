@@ -1,163 +1,18 @@
-const fs = require('fs') ;
-
-/**
- * @method equal2
- * @memberof Array
- * @description test equal array
- */
-Array.prototype.equal2 = function(ref) {
-
-    if( !(ref instanceof Array) ) return false;
-
-    let eq = true;
-
-    this.forEach( (el,key) => {
-
-        if( el != ref[key] )
-            eq = false;
-    } );
-
-    return eq;
-} ;
-
-let fileWatched = null; // path of current file watch
-let assetsWatcheds = [] ; // path of currents assets file watch
-
-const webDir =  (() => {
-
-    const sep = __dirname.indexOf('/') != -1 ? '/' : '\\' ;
-
-    let foundLast = false; 
-
-    return __dirname
-        .split( sep )
-        .filter( ressource => {
-            
-            if( 
-                foundLast ||
-                /express-live-reload|nodes?_modules?/.test( ressource )
-            ) {
-                foundLast = true;
-                return false;
-            }
-
-            return ressource;
-        } )
-        .join( sep ) + '\\'
-    ;
-
-} )();
-
-let itemsAssets = []; // items styles/js found web directory 
-
-function getAllFiles( path ) {
- 
-    fs.exists( path , exists => {
-        
-        if( exists ) {
-
-            fs.readdir( path , (err , items ) => {
-
-                if( err )
-                    throw 'asset dir not readable';
-
-                items.forEach( item => {
-
-                    if( fs.statSync( path + '\\' + item ).isDirectory() ) {
-                        getAllFiles( path + '\\' + item ) ;
-                    } else {
-                        if( /js|css/i.test(item.split('.').pop()) )
-                            itemsAssets.push( {
-                                path: path+ '\\' + item
-                                ,source: path.split('public')[1] + '\\' + item
-                            } ) ;
-                    }
-
-                } ) ;
-
-            } ) ;
-
-        } else {
-            console.log( liveReloadMiddleware.config['assets'] + ' dir not found asset not watched');
-        }
-
-    } ) ;
-
-}
+require('./lib/array.proto');
+require('./lib/env-vars') ;
 
 const
-    fileState = new ( require('events') )
-    ,onWatchFile = () => {
+    getAllFiles = require('./lib/get-all-files')
 
-        fileState.emit('tracked') ;
-    },
-    liveReloadMiddleware = (rq,res,next) => {
-
-        const {method,args} = res.done;
+    ,webDir =  require('./lib/webdir')()
     
-        let path = res.done.path ;
+    ,fileState = require('./lib/file-emitter')
 
-        if( !path ) {
-            path = args[0] ;
-        }
+    ,{liveReloadMiddleware,watchAssets} = require('./lib/watcher-file')
 
-        fs.exists( path , exists => {
+    ,liveReloading = function( server , namespace = '/live-reload' ) {
 
-            if( exists ) {
-
-                fs.watchFile( path , {
-                    persistent: true,
-                    interval: 1500 // ms interval ask change
-                } , onWatchFile ) ;
-
-                fileWatched = __dirname + '\\src\\index.html' ;
-
-            } else {
-                fileState.emit('not watchable' , path ) ;
-            }
-        } ) ;
-
-        if( fileWatched ) {
-            fs.unwatchFile( fileWatched , onWatchFile ) ;
-        }
-        if( assetsWatcheds.length ) {
-            assetsWatcheds.forEach( assetWatch => (
-                fs.unwatchFile( assetWatch , onWatchFile )
-            ) ) ;
-            assetsWatcheds = [] ;
-        }
-
-
-        res[ method ]( ...args );
-    },
-    watchAssets = items2watch => {
-
-        const ressources = items2watch.map( item => (
-            item.split( /(localhost|127\.0\.0\.1):?(\d{1,4})?/i ).filter( l => l.length ).pop()
-        ) ) ;
-
-        ressources.forEach(  ressource => {
-
-            ressource = ressource.split('/').filter( l => l.length ) ;
-
-            itemsAssets.forEach( itemStyle => {
-
-                src = itemStyle.source.split('\\').filter( l => l.length ) ;
-
-                if( ressource.equal2(src) ) {
-
-                    fs.watchFile( itemStyle.path , {
-                        persistent: true
-                        ,interval:2e3
-                    } , onWatchFile ) ;
-
-                    assetsWatcheds.push( itemStyle.path ) ;
-                }
-
-            } ) ;
-        } ) ;
-    },
-    liveReloading = function( server , namespace = '/live-reload' ) {
+        const { itemsAssets } = process.liveReloading ;
 
         server._events.request.get( /\/live\-?reload(ing(\.js)?)?(\/live\-?reload(ing(\.js))?)?/i  , (r,res) => {
     
@@ -238,8 +93,9 @@ const
         } ) ;
     
         return liveReloadMiddleware ;
-    } ,
-    keysConfigAccept = [
+    }
+
+    ,keysConfigAccept = [
         'assets'
     ]
 ;
@@ -274,7 +130,7 @@ liveReloadMiddleware.set = function( config ) {
 
         this.config['assets'] = 'public' ;
     }
-    
+
     this.init() ;
 } ;
 
