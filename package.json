@@ -1,0 +1,13 @@
+{
+  "name": "express-live-reloading",
+  "version": "0.1.0",
+  "description": "Live reloading middleware express",
+  "main": "live-reload.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "orivoir21",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
