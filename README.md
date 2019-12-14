@@ -1,4 +1,4 @@
-# express-live-reload
+# [express-live-reload](https://www.npmjs.com/package/express-live-reloading)
 
 > live reloading middleware express for **fast dev**
 
