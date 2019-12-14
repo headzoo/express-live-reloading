@@ -2,6 +2,6 @@
 
 > live reloading middleware express for **fast dev**
 
-## version `0.1.0`
+## version `0.2.0`
 
 ### `npm i express-live-reload --save-dev`
