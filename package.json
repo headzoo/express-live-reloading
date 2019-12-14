@@ -1,7 +1,7 @@
 {
   "homepage": "https://https://github.com/Orivoir/express-live-reloading",
   "name": "express-live-reloading",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Live reloading middleware express",
   "main": "live-reload.js",
   "scripts": {},

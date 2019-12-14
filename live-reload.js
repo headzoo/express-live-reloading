@@ -1,5 +1,5 @@
 require('./lib/array.proto');
-require('./lib/env-vars') ;
+require('./lib/env-vars');
 
 const
     getAllFiles = require('./lib/get-all-files')
