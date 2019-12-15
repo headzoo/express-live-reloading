@@ -3,9 +3,7 @@ require('./lib/env-vars');
 
 const
     fileState = require('./lib/file-emitter')
-
     ,{liveReloadMiddleware,watchAssets} = require('./lib/watcher-file')
-
     ,liveReloading = function( server , namespace = '/live-reload' ) {
 
         const { itemsAssets } = process.liveReloading ;
@@ -61,13 +59,35 @@ const
                 ,onName: 'listen'
             } )
     
-            fileState.on('tracked' , () => {
+            fileState.on('change' , () => {
     
                 socket.emit( 'change' ) ;
     
                 socket.emit('simply' , {
                     done: 'document.location.reload()'
                     ,onName: 'tracked'
+                } ) ;
+    
+            } ) ;
+    
+            fileState.on('unlink' , () => {
+    
+                socket.emit( 'unlink' ) ;
+    
+                socket.emit('simply' , {
+                    done: 'document.location.reload()'
+                    ,onName: 'unlink'
+                } ) ;
+    
+            } ) ;
+    
+            fileState.on('add' , () => {
+    
+                socket.emit( 'add' ) ;
+    
+                socket.emit('simply' , {
+                    done: 'document.location.reload()'
+                    ,onName: 'add'
                 } ) ;
     
             } ) ;

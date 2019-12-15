@@ -2,13 +2,13 @@
 
 > live reloading middleware express for **fast dev**
 
-## version `0.3.1`
+## version `0.4.0`
 
-### optimize structure file
+### re build watcher files system with *[chokidar](https://github.com/paulmillr/chokidar)* 
 
-- explode `config` code
-- define access `config` from **env vars**
-- add an **strict** `key` config 
+- fix `reload recursive infinite`
+- listen **add, unlink** file
+- add dependency **[chokidar](https://github.com/paulmillr/chokidar)** 
 
 ### `npm i express-live-reload --save-dev`
 
@@ -39,8 +39,8 @@ app.get( '/' , ( request, response, next ) => {
 
     const viewPath = __dirname + '\\src\\index.html';
 
-    // use res.done for define your render
-    res.done = {
+    // use response.done for define your render
+    response.done = {
         method: 'sendFile',
         args: [ viewPath ]
     } ;
