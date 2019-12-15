@@ -2,11 +2,7 @@ require('./lib/array.proto');
 require('./lib/env-vars');
 
 const
-    getAllFiles = require('./lib/get-all-files')
-
-    ,webDir =  require('./lib/webdir')()
-    
-    ,fileState = require('./lib/file-emitter')
+    fileState = require('./lib/file-emitter')
 
     ,{liveReloadMiddleware,watchAssets} = require('./lib/watcher-file')
 
@@ -94,50 +90,6 @@ const
     
         return liveReloadMiddleware ;
     }
-
-    ,keysConfigAccept = [
-        'assets'
-    ]
 ;
-
-// config entry method
-liveReloadMiddleware.set = function( config ) {
-
-    if( typeof config != 'object' ) return false;
-
-    liveReloadMiddleware.config = {} ;
-
-    const keysAccept = Object.keys( config ).filter( attr => {
-
-        const accept = keysConfigAccept.includes(attr)
-
-        if( accept ) {
-            liveReloadMiddleware.config[ attr ] = config[ attr ] ; 
-        }
-
-        return accept ;
-    } ) , 
-    keysReject = Object.keys( config ).filter( attr => (
-        !keysConfigAccept.includes(attr)
-    ) ) ;
-
-    if( keysReject.length ) {
-        console.log( `your are ${keysReject.length} keys unknow give with your set method config : ${keysReject.join(' , ')}`);
-    }
-
-    // default value config
-    if( !this.config['assets'] ) {
-
-        this.config['assets'] = 'public' ;
-    }
-
-    this.init() ;
-} ;
-
-// exec after read config
-liveReloadMiddleware.init = function() {
-
-    getAllFiles( webDir + this.config[ 'assets' ] ) ;
-} ;
 
 module.exports = liveReloading ;

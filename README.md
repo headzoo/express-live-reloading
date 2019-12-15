@@ -2,10 +2,71 @@
 
 > live reloading middleware express for **fast dev**
 
-## version `0.3.0`
+## version `0.3.1`
 
-- explode entry points inside sub directory `./lib`
-- fix `watch` assets with `javascript` file
-- add **config** with `set` method **on** `liveReloadMiddleware` 
+### optimize structure file
+
+- explode `config` code
+- define access `config` from **env vars**
+- add an **strict** `key` config 
 
 ### `npm i express-live-reload --save-dev`
+
+### usage:
+
+#### `server.js`
+```javascript
+
+const
+    exp = require('express')
+    ,app = exp()
+    ,server = require('http').Server( app )
+    ,liveReload = require('express-live-reload')( server )
+;
+
+liveReload.set( {
+    "assets": "./public" // path public directory default is "./public"
+    ,"strict": true, // use strict mode block code with bad config default false 
+} ) ;
+
+// your express config
+app
+    .use( exp.static( 'public' ) )
+    // ...
+;
+
+app.get( '/' , ( request, response, next ) => {
+
+    const viewPath = __dirname + '\\src\\index.html';
+
+    // use res.done for define your render
+    res.done = {
+        method: 'sendFile',
+        args: [ viewPath ]
+    } ;
+
+    next() ; // call the liveReload middleware
+
+} , liveReload /* this route use the liveReload with middleware */ ) ;
+```
+
+### `index.html`
+```html
+    <!-- ... , -->
+
+    <!-- call TCP client script -->
+    <script src="/socket.io/socket.io.js" ></script>
+
+    <!-- hot reload default action script ( is recommended ) -->
+    <script src="/live-reload/live-reload.js"></script>
+
+    <!-- you'r other script app -->
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"
+    >
+    </script>
+
+    <script src="/js/index.js"></script>
+```
