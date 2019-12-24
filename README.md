@@ -1,10 +1,11 @@
-# express-live-reloading `version 0.6.0`
+# express-live-reloading `version 0.6.1`
 
 > live reloading middleware express for **fast dev**
 
 ## re writing module for best client usage with express
 
 > npm install express-live-reloading --save-dev
+
 
 > yarn add express-live-realoading --dev
 
