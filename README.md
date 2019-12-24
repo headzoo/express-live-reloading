@@ -1,4 +1,4 @@
-# express-live-reloading `version 0.6.13`
+# express-live-reloading `version 0.6.14`
 
 > live reloading middleware express for **fast dev**
 
@@ -22,7 +22,7 @@ const
 liveReload.static( 'public' )
 
 app
-    .use( exp.static( 'public ) )
+    .use( exp.static( 'public' ) )
     .use( liveReload )
 ;
 
