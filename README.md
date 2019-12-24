@@ -1,4 +1,4 @@
-# express-live-reloading `version 0.6.1`
+# express-live-reloading `version 0.6.11`
 
 > live reloading middleware express for **fast dev**
 
