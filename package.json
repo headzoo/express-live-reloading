@@ -3,7 +3,7 @@
   "name": "express-live-reloading",
   "version": "0.6.0",
   "description": "Live reloading middleware express",
-  "main": "live-reload.js",
+  "main": "express-live-reloading.js",
   "scripts": {},
   "repository": {
     "type": "git",
