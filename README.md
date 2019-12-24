@@ -1,72 +1,71 @@
-# [express-live-reload](https://www.npmjs.com/package/express-live-reloading)
+# express-live-reloading `version 0.6.0`
 
 > live reloading middleware express for **fast dev**
 
-## version `0.4.0`
+## re writing module for best client usage with express
 
-### re build watcher files system with *[chokidar](https://github.com/paulmillr/chokidar)* 
+> npm install express-live-reloading --save-dev
 
-- fix `reload recursive infinite`
-- listen **add, unlink** file
-- add dependency **[chokidar](https://github.com/paulmillr/chokidar)** 
+> yarn add express-live-realoading --dev
 
-### `npm i express-live-reload --save-dev`
 
-### usage:
-
-#### `server.js`
 ```javascript
-
 const
     exp = require('express')
     ,app = exp()
     ,server = require('http').Server( app )
-    ,liveReload = require('express-live-reload')( server )
+    ,liveReload = require('express-live-reloading')( server )
 ;
 
-liveReload.set( {
-    "assets": "./public" // path public directory default is "./public"
-    ,"strict": true, // use strict mode block code with bad config default false 
+liveReload.static( 'public )
+
+app
+    .use( exp.static( 'public ) )
+    .use( liveReload )
+;
+
+app.get('/' , (req,res) => {
+
+    const render = __dirname + '\\index.html' ;
+
+    res
+        .liveReload( render ) // give absolute path of render live reload
+        .sendFile( render )
+    ;
+
 } ) ;
 
-// your express config
-app
-    .use( exp.static( 'public' ) )
-    // ...
-;
 
-app.get( '/' , ( request, response, next ) => {
+server.listen( 80 , () => console.log("server run ...") ) ;
 
-    const viewPath = __dirname + '\\src\\index.html';
-
-    // use response.done for define your render
-    response.done = {
-        method: 'sendFile',
-        args: [ viewPath ]
-    } ;
-
-    next() ; // call the liveReload middleware
-
-} , liveReload /* this route use the liveReload with middleware */ ) ;
 ```
 
-### `index.html`
 ```html
-    <!-- ... , -->
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- call TCP client script -->
-    <script src="/socket.io/socket.io.js" ></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="/index.css">
+    </head>
 
-    <!-- hot reload default action script ( is recommended ) -->
-    <script src="/live-reload/live-reload.js"></script>
+    <body>
 
-    <!-- you'r other script app -->
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"
-    >
-    </script>
+        <main>
 
-    <script src="/js/index.js"></script>
+            <h1>Ullamco Lorem eiusmod deserunt elit aliquip ut reprehenderit.</h1>
+
+        </main>
+
+        <!-- socket.io TCP/IP client script  -->
+        <script src="/socket.io/socket.io.js" ></script>
+
+        <!-- live reloading app client script -->
+        <script src="/live-reload.js"></script>
+
+    </body>
+</html>
 ```
