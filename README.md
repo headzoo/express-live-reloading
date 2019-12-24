@@ -1,14 +1,15 @@
-# express-live-reloading `version 0.6.11`
+# express-live-reloading `version 0.6.12`
 
 > live reloading middleware express for **fast dev**
 
 ## re writing module for best client usage with express
 
-> npm install express-live-reloading --save-dev
+## ```npm install express-live-reloading --save-dev```
 
 
-> yarn add express-live-realoading --dev
+## ```yarn add express-live-realoading --dev```
 
+## server.js
 
 ```javascript
 const
@@ -41,6 +42,7 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 
 ```
 
+## index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -70,3 +72,17 @@ server.listen( 80 , () => console.log("server run ...") ) ;
     </body>
 </html>
 ```
+
+## output -> index.html
+```
+"[live reload] on"
+"index.html --watched with success"
+"index.css --watched with success"
+```
+
+## express live reloading watch only files call with your view file for best performence
+## re start server is listen with `live-reload.js` for auto reload your view
+
+### [npm package](https://www.npmjs.com/package/express-live-reloading)
+
+### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **<3** and **Nodejs** for **open source** and **enjoy**
