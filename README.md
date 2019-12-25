@@ -1,8 +1,8 @@
-# express-live-reloading `version 0.7.15`
+# express-live-reloading `version 0.7.17`
 
 > live reloading middleware express for **fast dev**
 
-## ```npm install express-live-reloading --save-dev```
+### ```npm install express-live-reloading --save-dev```
 
 ### ```yarn add express-live-realoading --dev```
 
