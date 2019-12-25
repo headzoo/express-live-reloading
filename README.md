@@ -1,12 +1,14 @@
-# express-live-reloading `version 0.7.17`
+# express-live-reloading `version 0.7.18`
 
-> live reloading middleware express for **fast dev**
+live reloading middleware express for **fast dev** .
 
-### ```npm install express-live-reloading --save-dev```
+## Installation
 
-### ```yarn add express-live-realoading --dev```
+```npm install express-live-reloading --save-dev```
 
-## server.js
+```yarn add express-live-realoading --dev```
+
+### server.js
 
 ```javascript
 const
@@ -39,7 +41,8 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 
 ```
 
-## index.html
+### index.html
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
