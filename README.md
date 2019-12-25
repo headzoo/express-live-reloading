@@ -2,7 +2,7 @@
 
 > live reloading middleware express for **fast dev**
 
-### ```npm install express-live-reloading --save-dev```
+## ```npm install express-live-reloading --save-dev```
 
 ### ```yarn add express-live-realoading --dev```
 
