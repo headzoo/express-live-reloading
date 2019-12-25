@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "homepage": "https://https://github.com/Orivoir/express-live-reloading",
   "name": "express-live-reloading",
   "version": "0.7.18",
