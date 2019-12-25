@@ -17,7 +17,32 @@ const
 
 process.liveReload = {
 
-    staticDir: ""
+    _staticDir: ""
+    ,get staticDir() {
+        return this._staticDir ;
+    }
+    ,set staticDir( val ) {
+
+        if( typeof val === 'string' ) {
+
+            const absolutePath = clientDir() + "\\" + val ;
+
+            if( fs.existsSync( absolutePath ) ) {
+
+                this._staticDir = val ;
+
+            } else {
+                // path not found
+                console.log("live reloading static path not found with : " , absolutePath );
+                throw "please check you call of method `static`";
+            }
+
+        } else{
+            // path not an string
+            console.log("live reloading `static` argument error : ( staticDirectory: string)");
+            throw "please check you call of method `static`";
+        }
+    }
     ,assets: {
         scripts: []
         ,styles: []
