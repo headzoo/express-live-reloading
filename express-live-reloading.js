@@ -18,7 +18,9 @@ const
 
 process.liveReload = {
 
-    _staticDir: ""
+    virtualDir: ""
+
+    ,_staticDir: ""
     ,get staticDir() {
         return this._staticDir ;
     }
@@ -50,6 +52,7 @@ process.liveReload = {
     }
     ,watchers: []
     ,lastReq: null
+
     ,done() {
 
         Promise
@@ -78,6 +81,11 @@ process.liveReload = {
                 Object.keys( this.assets ).forEach( assetType => {
 
                     this.assets[ assetType ].forEach( relativeSource => {
+
+                        if( this.virtualDir ) {
+
+                            relativeSource = relativeSource.replace( this.virtualDir , '' ) ;
+                        }
 
                         const absolutePath = path.join( clientDir()  , this.staticDir , relativeSource ) ;
 

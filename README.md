@@ -6,11 +6,13 @@
 
 live reloading middleware express for **fast dev** .
 
+## `version 0.7.4` is in code review install temp
+
 ## Installation
 
-```npm install express-live-reloading --save-dev```
+```npm install express-live-reloading@0.7.4 --save-dev```
 
-```yarn add express-live-realoading --dev```
+```yarn add express-live-realoading@0.7.4 --dev```
 
 ### server.js
 
