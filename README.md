@@ -1,6 +1,6 @@
-# express-live-reloading `version 0.7.0`
+# express-live-reloading `version 0.7.1`
 
-## version `0.7.0` is an review version install with:
+## version `0.7.*` is an review version install with:
 
 ## ```npm install express-live-reloading@0.6.14 --save-dev```
 
