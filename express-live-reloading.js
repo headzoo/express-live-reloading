@@ -25,9 +25,14 @@ process.liveReload = {
     }
     ,set path( val ) {
 
+        if( !!this.viewsDir ) {
+
+            val = path.join(this.viewsDir , val  ) ;
+        }
+
         if( typeof val === 'string' ) {
 
-            if( !path.isAbsolute() ) {
+            if( !path.isAbsolute( val ) ) {
 
                 val = path.join( clientDir()  , val ) ;
             }
@@ -38,14 +43,10 @@ process.liveReload = {
 
             } else {
 
-                console.log('live reload views directory not found with: ' , val ) ;
-                throw 'please check you call method `views`' ;
+                console.log('live reload path render directory not found with: ' , val ) ;
+                throw 'please check you call method `liveReload`' ;
             }
 
-        } else {
-
-            console.log( 'live reload `views` method arg1 bust me an string but is ' , typeof val );
-            throw 'please go read README.md';
         }
 
     }
@@ -134,12 +135,8 @@ process.liveReload = {
         .all( this.watchers.map( watcher => watcher.close() ) )
         .then( () => { // all watchers close with success
 
-            let {viewsDir,pathRender} = this;
+            let pathRender = this.path;
 
-            if( viewsDir ) {
-
-                pathRender = path.join( pathRender , viewsDir ) ;
-            }
 
             if( fs.existsSync( pathRender ) ) { // render path give exists
 
