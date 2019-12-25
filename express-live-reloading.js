@@ -9,6 +9,7 @@
  */
 const
     fs = require('fs')
+    ,path  = require('path')
     ,chokidar = require('chokidar')
     ,reloadEmitter = new ( require('events') )()
     ,clientDir = require('./lib/client-dir')
@@ -25,7 +26,7 @@ process.liveReload = {
 
         if( typeof val === 'string' ) {
 
-            const absolutePath = clientDir() + "\\" + val ;
+            const absolutePath = path.join( clientDir() , val ) ;
 
             if( fs.existsSync( absolutePath ) ) {
 
@@ -78,7 +79,7 @@ process.liveReload = {
 
                     this.assets[ assetType ].forEach( relativeSource => {
 
-                        const absolutePath = clientDir() + '/' + this.staticDir + relativeSource ;
+                        const absolutePath = path.join( clientDir()  , this.staticDir , relativeSource ) ;
 
                         if( fs.existsSync( absolutePath ) ) {
 
