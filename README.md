@@ -6,13 +6,11 @@
 
 live reloading middleware express for **fast dev** .
 
-## `version 0.7.4` is in code review install temp
-
 ## Installation
 
-```npm install express-live-reloading@0.7.4 --save-dev```
+```npm install express-live-reloading --save-dev```
 
-```yarn add express-live-realoading@0.7.4 --dev```
+```yarn add express-live-realoading --dev```
 
 ### server.js
 
@@ -79,7 +77,49 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 </html>
 ```
 
-## output -> index.html
+## with an virtual static directory
+
+### server.js
+
+```javascript
+const
+    exp = require('express')
+    ,app = exp()
+    ,server = require('http').Server( app )
+    ,liveReload = require('express-live-reloading')( server )
+;
+
+liveReload.static(
+    '/assets', // virtual directory for you URL
+    'public' // phisycal directory in you computer
+) ;
+
+app
+    .use(
+        '/assets' , // virtual directory for you URL
+        exp.static( 'public' ) // phisycal directory in you computer
+    )
+    .use( liveReload )
+;
+
+app.get('/' , (req,res) => {
+
+    const render = __dirname + '\\index.html' ;
+
+    res
+        .liveReload( render ) // give absolute path of render live reload
+        .sendFile( render )
+    ;
+
+} ) ;
+
+
+server.listen( 80 , () => console.log("server run ...") ) ;
+
+```
+
+
+## output `index.html`
 ```
 "[live reload] on"
 "index.html --watched with success"
