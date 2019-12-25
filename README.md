@@ -1,15 +1,10 @@
-# express-live-reloading `version 0.7.1`
-
-## version `0.7.*` is an review version install with:
-
-## ```npm install express-live-reloading@0.6.14 --save-dev```
-
-## ```yarn add express-live-realoading@0.6.14 --dev```
+# express-live-reloading `version 0.7.15`
 
 > live reloading middleware express for **fast dev**
 
+### ```npm install express-live-reloading --save-dev```
 
-## ```yarn add express-live-realoading --dev```
+### ```yarn add express-live-realoading --dev```
 
 ## server.js
 
