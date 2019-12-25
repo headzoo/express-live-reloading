@@ -31,11 +31,9 @@ app
 
 app.get('/' , (req,res) => {
 
-    const render = __dirname + '\\index.html' ;
-
     res
-        .liveReload( render ) // give absolute path of render live reload
-        .sendFile( render )
+        .liveReload( './views/index.html' )
+        .sendFile( __dirname + '\\views\\index.html' )
     ;
 
 } ) ;
@@ -107,17 +105,59 @@ app.get('/' , (req,res) => {
     const render = __dirname + '\\index.html' ;
 
     res
-        .liveReload( render ) // give absolute path of render live reload
-        .sendFile( render )
+        .liveReload( './views/index.html' )
+        .sendFile( __dirname + '\\views\\index.html' )
     ;
 
 } ) ;
-
 
 server.listen( 80 , () => console.log("server run ...") ) ;
 
 ```
 
+
+## you can define an views directory with
+
+```javascript
+const
+    exp = require('express')
+    ,app = exp()
+    ,server = require('http').Server( app )
+    ,liveReload = require('express-live-reloading')( server )
+;
+
+liveReload.static(
+    '/assets', // virtual directory for you URL
+    'public' // phisycal directory in you computer
+) ;
+
+
+// define directory of views render
+liveReload.views('./views') ;
+
+// ... ,
+```
+
+## the render file is auto search in *root/views*
+
+```javascript
+// , ...
+
+liveReload.views('./views') ;
+
+app.get('/' , (req,res) => {
+
+    const render = __dirname + '\\index.html' ;
+
+    res
+        .liveReload( './index.html' ) // because views directory is define
+        .sendFile( __dirname + '\\views\\index.html' )
+    ;
+
+} ) ;
+
+// ... ,
+```
 
 ## output `index.html`
 ```
@@ -126,9 +166,8 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 "index.css --watched with success"
 ```
 
-## express live reloading watch only files call with your view file for best performence
-## re start server is listen with `live-reload.js` for auto reload your view
+### express live reloading watch only files call with your view file for best performence
 
-### [npm package](https://www.npmjs.com/package/express-live-reloading)
+### re start server is listen with `live-reload.js` for auto reload your view
 
-### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **<3** and **Nodejs** for **open source** and **enjoy**
+#### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **<3** and **Nodejs** for **open source** and **enjoy**

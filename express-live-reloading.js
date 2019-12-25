@@ -18,7 +18,81 @@ const
 
 process.liveReload = {
 
-    virtualDir: ""
+    _path: null
+    ,get path() {
+
+        return this._path;
+    }
+    ,set path( val ) {
+
+        if( typeof val === 'string' ) {
+
+            if( !path.isAbsolute() ) {
+
+                val = path.join( clientDir()  , val ) ;
+            }
+
+            if( fs.existsSync( val ) ) {
+
+                this._path = val ;
+
+            } else {
+
+                console.log('live reload views directory not found with: ' , val ) ;
+                throw 'please check you call method `views`' ;
+            }
+
+        } else {
+
+            console.log( 'live reload `views` method arg1 bust me an string but is ' , typeof val );
+            throw 'please go read README.md';
+        }
+
+    }
+
+    ,_viewsDir: null
+    ,get viewsDir() {
+
+        return this._viewsDir;
+    }
+    ,set viewsDir( val ) {
+
+        if( typeof val === 'string' ) {
+
+            const absolutePath = path.join( clientDir() , val ) ;
+
+            if( fs.existsSync( absolutePath ) ) {
+
+                this._viewsDir = val ;
+
+            } else {
+
+                console.log( 'live reload views directory not found with: ' , absolutePath );
+                throw 'please check you call method `views`' ;
+
+            }
+
+        } else {
+
+            console.log('live reload views directory bust me an string but you have give : ' , typeof val );
+            throw 'please go read README.md';
+        }
+    }
+
+    ,_virtualDir: ""
+    ,get virtualDir() {
+
+        return this._virtualDir ;
+    }
+    ,set virtualDir( val ) {
+
+        this._virtualDir = typeof val === 'string' ? val: null;
+
+        if( !this._virtualDir ) {
+            console.log('live reaload argument error for call `static` method , virtual directory bust be a string') ;
+            throw 'live reaload argument error please go read README.md' ;
+        }
+    }
 
     ,_staticDir: ""
     ,get staticDir() {
@@ -46,6 +120,7 @@ process.liveReload = {
             throw "please check you call of method `static`";
         }
     }
+
     ,assets: {
         scripts: []
         ,styles: []
@@ -59,9 +134,16 @@ process.liveReload = {
         .all( this.watchers.map( watcher => watcher.close() ) )
         .then( () => { // all watchers close with success
 
-            if( fs.existsSync( this.path ) ) { // render path give exists
+            let {viewsDir,pathRender} = this;
 
-                const watcher = chokidar.watch( this.path ) ;
+            if( viewsDir ) {
+
+                pathRender = path.join( pathRender , viewsDir ) ;
+            }
+
+            if( fs.existsSync( pathRender ) ) { // render path give exists
+
+                const watcher = chokidar.watch( pathRender ) ;
 
                 watcher
                     // event add emit immediately after invoke on file use only for listen an directory
@@ -76,7 +158,7 @@ process.liveReload = {
 
                 this.watchers.push( watcher ) ;
 
-                reloadEmitter.emit('success watch' , this.path ) ;
+                reloadEmitter.emit('success watch' , pathRender ) ;
 
                 Object.keys( this.assets ).forEach( assetType => {
 
