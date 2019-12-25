@@ -1,26 +1,18 @@
+/**
+ * @author S.Gaborieau <sam.gabor@hotmail.com>
+ *
+ * @package [npm] express-live-reloading
+ * @version 0.7.0 `review version`
+ *
+ * @git <https://github.com/Orivoir/express-live-reloading>
+ * @npm <https://www.npmjs.com/package/express-live-reloading>
+ */
 const
     fs = require('fs')
     ,chokidar = require('chokidar')
     ,reloadEmitter = new ( require('events') )()
-    ,clientDir = () => {
-
-        let found = false ;
-        const sep = __dirname.indexOf('/') !== -1 ? "/": "\\";
-
-        return __dirname.split( sep ).filter( ressource => {
-
-            if( found ) return false;
-
-            if( /express-live-reloading|node_modules/.test( ressource ) ) {
-
-                found = true;
-                return false;
-            }
-
-            return true;
-
-        } ).join( sep ) ;
-    }
+    ,clientDir = require('./lib/client-dir')
+    ,entryPoint = require('./lib/entry-point')( reloadEmitter )
 ;
 
 process.liveReload = {
@@ -38,12 +30,16 @@ process.liveReload = {
         .all( this.watchers.map( watcher => watcher.close() ) )
         .then( () => { // all watchers close with success
 
-            if( fs.existsSync( this.path ) ) {
+            if( fs.existsSync( this.path ) ) { // render path give exists
 
                 const watcher = chokidar.watch( this.path ) ;
 
                 watcher
-                    // event add emit immediately invoke bug infinity reload
+                    // event add emit immediately after invoke on file use only for listen an directory
+                    // emit reload
+                    // attach watcher
+                    // emit reload
+                    // ...
                     // .on('add' , () => reloadEmitter.emit('reload') )
                     .on('change' , () => reloadEmitter.emit('reload') )
                     .on('unlink' , () => reloadEmitter.emit('reload') )
@@ -81,72 +77,24 @@ process.liveReload = {
                 } ) ;
 
             } else {
-                // socket immediately re emit after re start server but not HTTP request listen
-                reloadEmitter.emit('reload') ; // :-)
+                // socket immediately re emit after re start server on last channel but not new HTTP request listen
+                reloadEmitter.emit('reload') ; // server re start detect and synchronize client with an reload
 
                 // console.log('render :' , this.path , ' not found' );
                 // throw 'render not found';
             }
 
-        } ).catch( () => {
+        } ).catch( err => { // watcher.s file error close , app broke for dont memory overflow
 
-            throw "one or many watcher fail close" ;
+            console.log( 'close err status: ' , err );
+            throw "one or many watcher file fail close" ;
 
         } ) ;
 
     }
 } ;
 
-const middleware = function( req , res , next ) {
-
-    if( req.url === "/live-reload.js" ) {
-        res.type('application/javascript') ;
-        res.sendFile( __dirname + '\\client\\client.js' ) ;
-    } else {
-
-        res.liveReload = function( path ) {
-
-            process.liveReload.path = path ;
-            return this;
-        } ;
-
-        next() ;
-    }
-} ;
-
-const entryPoint = function( server ) {
-
-    const io = require('socket.io')( server ) ;
-
-    liveReloadIO = io.of( '/live-reload' );
-
-    liveReloadIO.on('connect' , socket => {
-
-        reloadEmitter.on('reload' , () => socket.emit('reload') ) ;
-
-        reloadEmitter.on('success watch' , path => socket.emit('success watch' , path ) ) ;
-        reloadEmitter.on('fail watch' , path => socket.emit('fail watch' , path ) ) ;
-
-        socket.emit('skip' , {
-            scripts: ['/socket.io/socket.io.js' , '/live-reload.js']
-            ,styles: []
-        } ) ;
-
-        socket.on('assets' , assets => {
-
-            process.liveReload.assets = assets ;
-            process.liveReload.done() ;
-
-        } ) ;
-
-    } ) ;
-
-    return middleware ;
-} ;
-
-middleware.static = function( staticDir ) {
-
-    process.liveReload.staticDir = staticDir ;
-} ;
-
+/**
+ * @exports Function *entry point* **hydrate config** attach **TCP/IP** server and return `middleware` for **express**
+ */
 module.exports = entryPoint;
