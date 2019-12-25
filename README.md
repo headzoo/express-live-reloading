@@ -1,4 +1,4 @@
-# express-live-reloading `version 0.7.25`
+# [express-live-reloading](https://www.npmjs.com/package/express-live-reloading)
 
 [![npm](https://img.shields.io/npm/l/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 [![npm downloads](https://img.shields.io/npm/dm/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
