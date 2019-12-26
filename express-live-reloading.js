@@ -2,7 +2,7 @@
  * @author S.Gaborieau <sam.gabor@hotmail.com>
  *
  * @package [npm] express-live-reloading
- * @version 0.7.0 `review version`
+ * @version 0.7.8 `stabilize version`
  *
  * @git <https://github.com/Orivoir/express-live-reloading>
  * @npm <https://www.npmjs.com/package/express-live-reloading>
@@ -12,13 +12,24 @@ const
     ,path  = require('path')
     ,chokidar = require('chokidar')
     ,reloadEmitter = new ( require('events') )()
-    ,clientDir = require('./lib/client-dir')
     ,entryPoint = require('./lib/entry-point')( reloadEmitter )
 ;
 
+let clientDir = require('./lib/client-dir')() ;
+
 process.liveReload = {
 
-    _path: null
+    _clientDir: null
+    ,get clientDir() {
+
+        return this._clientDir ;
+    }
+    ,set clientDir( val ) {
+
+        clientDir = val;
+    }
+
+    ,_path: null
     ,get path() {
 
         return this._path;
@@ -30,11 +41,15 @@ process.liveReload = {
             val = path.join(this.viewsDir , val  ) ;
         }
 
+        if( !!this.devUse ) {
+            console.log( 'path render : ' , val );
+        }
+
         if( typeof val === 'string' ) {
 
             if( !path.isAbsolute( val ) ) {
 
-                val = path.join( clientDir()  , val ) ;
+                val = path.join( clientDir  , val ) ;
             }
 
             if( fs.existsSync( val ) ) {
@@ -60,7 +75,7 @@ process.liveReload = {
 
         if( typeof val === 'string' ) {
 
-            const absolutePath = path.join( clientDir() , val ) ;
+            const absolutePath = path.join( clientDir , val ) ;
 
             if( fs.existsSync( absolutePath ) ) {
 
@@ -103,7 +118,7 @@ process.liveReload = {
 
         if( typeof val === 'string' ) {
 
-            const absolutePath = path.join( clientDir() , val ) ;
+            const absolutePath = path.join( clientDir , val ) ;
 
             if( fs.existsSync( absolutePath ) ) {
 
@@ -137,18 +152,16 @@ process.liveReload = {
 
             let pathRender = this.path;
 
+            if( this.devUse ) {
+
+                console.log( 'try watch with: ' , pathRender );
+            }
 
             if( fs.existsSync( pathRender ) ) { // render path give exists
 
                 const watcher = chokidar.watch( pathRender ) ;
 
                 watcher
-                    // event add emit immediately after invoke on file use only for listen an directory
-                    // emit reload
-                    // attach watcher
-                    // emit reload
-                    // ...
-                    // .on('add' , () => reloadEmitter.emit('reload') )
                     .on('change' , () => reloadEmitter.emit('reload') )
                     .on('unlink' , () => reloadEmitter.emit('reload') )
                 ;
@@ -166,7 +179,19 @@ process.liveReload = {
                             relativeSource = relativeSource.replace( this.virtualDir , '' ) ;
                         }
 
-                        const absolutePath = path.join( clientDir()  , this.staticDir , relativeSource ) ;
+                        if( this.devUse ) {
+
+                            if( !!this.virtualDir ) {
+
+                                console.log( 'asset virtual dir : '  , this.virtualDir );
+                            } else {
+                                console.log( 'not virtual dir define' );
+                            }
+                        }
+
+                        const absolutePath = path.join( clientDir  , this.staticDir , relativeSource ) ;
+
+                        console.log( 'try call asset with:' , absolutePath );
 
                         if( fs.existsSync( absolutePath ) ) {
 
@@ -189,12 +214,24 @@ process.liveReload = {
 
                 } ) ;
 
-            } else {
-                // socket immediately re emit after re start server on last channel but not new HTTP request listen
-                reloadEmitter.emit('reload') ; // server re start detect and synchronize client with an reload
+            } else { // path render not exists
 
-                // console.log('render :' , this.path , ' not found' );
-                // throw 'render not found';
+                if(typeof pathRender !== 'string' ) {
+                    // socket immediately re emit after re start server on last channel but not new HTTP request listen
+
+                    if( !!this.devUse ) {
+                        console.log( 're start server detect auto reload run' );
+                    }
+
+                    // server re start detect and synchronize client with an reload
+                    reloadEmitter.emit('reload') ;
+
+                } else {
+                    // error path give by client not reload else infinite reload
+                    console.log('render :' , pathRender , ' not found' );
+                    throw 'please check you call method `liveReload` in you response middleware';
+                }
+
             }
 
         } ).catch( err => { // watcher.s file error close , app broke for dont memory overflow
