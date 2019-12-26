@@ -19,7 +19,22 @@ let clientDir = require('./lib/client-dir')() ;
 
 process.liveReload = {
 
-    _clientDir: null
+    _devUse: false
+    ,get devUse() {
+
+        return this._devUse ;
+    }
+    ,set devUse(val) {
+
+        this._devUse = val;
+
+        if( !!this._devUse ) {
+
+            this.logs = require('./lib/chalk-color') ;
+        }
+    }
+
+    ,_clientDir: null
     ,get clientDir() {
 
         return this._clientDir ;
@@ -42,7 +57,7 @@ process.liveReload = {
         }
 
         if( !!this.devUse ) {
-            console.log( 'path render : ' , val );
+            this.logs.info( 'path render : ' , val );
         }
 
         if( typeof val === 'string' ) {
@@ -152,9 +167,9 @@ process.liveReload = {
 
             let pathRender = this.path;
 
-            if( this.devUse ) {
+            if( !!this.devUse ) {
 
-                console.log( 'try watch with: ' , pathRender );
+                this.logs.info( 'try watch with: ' , pathRender );
             }
 
             if( fs.existsSync( pathRender ) ) { // render path give exists
@@ -182,16 +197,15 @@ process.liveReload = {
                         if( this.devUse ) {
 
                             if( !!this.virtualDir ) {
-
-                                console.log( 'asset virtual dir : '  , this.virtualDir );
+                                this.logs.info( 'asset virtual dir : '  , this.virtualDir );
                             } else {
-                                console.log( 'not virtual dir define' );
+                                this.logs.info( 'not virtual dir define' );
                             }
                         }
 
                         const absolutePath = path.join( clientDir  , this.staticDir , relativeSource ) ;
 
-                        console.log( 'try call asset with:' , absolutePath );
+                        this.logs.info( 'try call asset with:' , absolutePath );
 
                         if( fs.existsSync( absolutePath ) ) {
 
@@ -220,15 +234,21 @@ process.liveReload = {
                     // socket immediately re emit after re start server on last channel but not new HTTP request listen
 
                     if( !!this.devUse ) {
-                        console.log( 're start server detect auto reload run' );
+                        this.logs.info( 're start server detect auto reload run' );
                     }
 
                     // server re start detect and synchronize client with an reload
                     reloadEmitter.emit('reload') ;
 
                 } else {
-                    // error path give by client not reload else infinite reload
-                    console.log('render :' , pathRender , ' not found' );
+
+                    if( !!this.devUse ) {
+                        this.logs.error('render :' , pathRender , ' not found') ;
+                    } else {
+
+                        // error path give by client not reload else infinite reload
+                        console.log('render :' , pathRender , ' not found' );
+                    }
                     throw 'please check you call method `liveReload` in you response middleware';
                 }
 

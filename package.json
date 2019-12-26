@@ -2,7 +2,7 @@
   "private": false,
   "homepage": "https://https://github.com/Orivoir/express-live-reloading",
   "name": "express-live-reloading",
-  "version": "0.7.8",
+  "version": "0.7.85",
   "description": "Live reloading middleware express",
   "main": "express-live-reloading.js",
   "scripts": {},
@@ -29,5 +29,8 @@
   "dependencies": {
     "chokidar": "^3.3.0",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "chalk": "^3.0.0"
   }
 }
