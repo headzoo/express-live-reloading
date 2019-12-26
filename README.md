@@ -8,6 +8,11 @@
 
 ![screen demo](./screenshot-demo.png)
 
+
+### express live reloading watch only files call with your view file for best performances
+
+### re start server is listen with `live-reload.js` for auto reload your view
+
 ## Installation
 
 ```npm install express-live-reloading --save-dev```
@@ -168,8 +173,4 @@ app.get('/' , (req,res) => {
 // ... ,
 ```
 
-### express live reloading watch only files call with your view file for best performence
-
-### re start server is listen with `live-reload.js` for auto reload your view
-
-#### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **<3** and **Nodejs** for **open source** and **enjoy**
+#### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **❤️** and **Nodejs** for **open source** and **enjoy**
