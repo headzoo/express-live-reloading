@@ -6,6 +6,8 @@
 
 > live reloading middleware express for **fast dev** .
 
+![screen demo](./screenshot-demo.png)
+
 ## Installation
 
 ```npm install express-live-reloading --save-dev```
