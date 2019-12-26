@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 [![npm version](https://img.shields.io/npm/v/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 
-live reloading middleware express for **fast dev** .
+> live reloading middleware express for **fast dev** .
 
 ## Installation
 
@@ -73,6 +73,13 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 
     </body>
 </html>
+```
+
+## output `index.html`
+```
+"[live reload] on"
+"index.html --watched with success"
+"index.css --watched with success"
 ```
 
 ## with an virtual static directory
@@ -157,13 +164,6 @@ app.get('/' , (req,res) => {
 } ) ;
 
 // ... ,
-```
-
-## output `index.html`
-```
-"[live reload] on"
-"index.html --watched with success"
-"index.css --watched with success"
 ```
 
 ### express live reloading watch only files call with your view file for best performence

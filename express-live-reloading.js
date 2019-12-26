@@ -205,7 +205,10 @@ process.liveReload = {
 
                         const absolutePath = path.join( clientDir  , this.staticDir , relativeSource ) ;
 
-                        this.logs.info( 'try call asset with:' , absolutePath );
+                        if( !!this.devUse ) {
+
+                            this.logs.info( 'try call asset with:' , absolutePath );
+                        }
 
                         if( fs.existsSync( absolutePath ) ) {
 
