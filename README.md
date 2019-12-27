@@ -4,6 +4,8 @@
 [![npm downloads](https://img.shields.io/npm/dm/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 [![npm version](https://img.shields.io/npm/v/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 
+[![Build Status](https://travis-ci.org/Orivoir/express-live-reloading.svg?branch=master)](https://travis-ci.org/Orivoir/express-live-reloading)
+
 > live reloading middleware express for **fast dev** .
 
 ![screen demo](./screenshot-demo.png)
