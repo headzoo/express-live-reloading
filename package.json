@@ -2,10 +2,15 @@
   "private": false,
   "homepage": "https://https://github.com/Orivoir/express-live-reloading",
   "name": "express-live-reloading",
-  "version": "0.8.21",
+  "version": "0.8.5",
   "description": "Live reloading middleware express",
   "main": "express-live-reloading.js",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+    ,"coverage": "nyc npm test"
+    ,"report": "nyc --reporter=lcov npm run coverage"
+    ,"codecov": "codecov"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Orivoir/express-live-reloading.git"
@@ -31,6 +36,10 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "chalk": "^3.0.0"
+    "chai": "^4.2.0",
+    "chalk": "^3.0.0",
+    "codecov": "^3.6.1",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0"
   }
 }
