@@ -33,9 +33,6 @@ describe('test contains env variables' , () => {
 
         } ) ;
 
-        /**
-         * @todo test setter property
-         */
         describe('test `devUse`' , () => {
 
             it('should contains an property `devUse`' , () => {
@@ -50,11 +47,38 @@ describe('test contains env variables' , () => {
 
             } ) ;
 
+            it('should transform value in boolean from setter' , () => {
+
+                liveReload.devUse = null ;
+
+                assert.isBoolean( liveReload.devUse ) ;
+
+            } ) ;
+
         } ) ;
 
-        /**
-         * @todo test setter property
-         */
+        describe('test `logs`' , () => {
+
+            it('should not be defined' , () => {
+
+                expect( liveReload ).to.have.not.property( 'logs' ) ;
+
+            } ) ;
+
+            it('should defined' , () => {
+
+                liveReload.devUse = 42;
+                expect( liveReload ).to.have.property( 'logs' ) ;
+            } ) ;
+
+            it('should be an object' , () => {
+
+                assert.isObject( liveReload.logs ) ;
+
+            } ) ;
+
+        } ) ;
+
         describe('test `clientDir`' , () => {
 
             it('should contains an property `clientDir`' , () => {
@@ -69,11 +93,21 @@ describe('test contains env variables' , () => {
 
             } ) ;
 
+            it('should \\throw TypeError' , () => {
+
+                try {
+
+                    liveReload.clientDir = 42;
+
+                    throw 'have not throw TypeError' ;
+                } catch( TypeError ) {
+                    // ok!
+                }
+
+            } ) ;
+
         } ) ;
 
-        /**
-         * @todo test setter property
-         */
         describe('test `path`' , () => {
 
             it('should be contains an property `path`' , () => {
@@ -85,6 +119,19 @@ describe('test contains env variables' , () => {
             it('should be null `path`' , () => {
 
                 assert.isNull( liveReload.path ) ;
+
+            } ) ;
+
+            it('should \\throw TypeError' , () => {
+
+                try {
+
+                    liveReload.path = 42;
+
+                    throw 'have not throw TypeError' ;
+                } catch( TypeError ) {
+                    // ok!
+                }
 
             } ) ;
 
@@ -107,11 +154,21 @@ describe('test contains env variables' , () => {
 
             } ) ;
 
+            it('should \\throw TypeError' , () => {
+
+                try {
+
+                    liveReload.viewsDir = 42 ;
+                    throw 'have not throw TypeError' ;
+
+                } catch( TypeError ) {
+                    // ok !
+                }
+
+            } ) ;
+
         } ) ;
 
-        /**
-         * @todo test setter property
-         */
         describe('test `virtualDir`' , () => {
 
             it('should be contains an property `virtualDir`' , () => {
@@ -126,11 +183,21 @@ describe('test contains env variables' , () => {
 
             } ) ;
 
+            it('should \\throw TypeError' , () => {
+
+                try {
+
+                    liveReload.virtualDir = 42 ;
+                    throw 'have not throw TypeError' ;
+
+                } catch( TypeError ) {
+                    // ok !
+                }
+
+            } ) ;
+
         } ) ;
 
-        /**
-         * @todo test setter property
-         */
         describe('test `staticDir`' , () => {
 
             it('should be contains an property `staticDir`' , () => {
@@ -142,6 +209,19 @@ describe('test contains env variables' , () => {
             it('should be an string `staticDir`' , () => {
 
                 assert.isString( liveReload.staticDir ) ;
+
+            } ) ;
+
+            it('should \\throw TypeError' , () => {
+
+                try {
+
+                    liveReload.staticDir = 42 ;
+                    throw 'have not throw TypeError' ;
+
+                } catch( TypeError ) {
+                    // ok !
+                }
 
             } ) ;
 
@@ -204,7 +284,7 @@ describe('test contains env variables' , () => {
         } ) ;
 
         /**
-         * @todo re factoring `done` method :'(
+         * @todo re-factoring `done` method :'(
          */
         describe('test `done`' , () => {
 
