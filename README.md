@@ -1,7 +1,7 @@
 # [express-live-reloading](https://www.npmjs.com/package/express-live-reloading)
 
 [![npm](https://img.shields.io/npm/l/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
-[![npm downloads](https://img.shields.io/npm/dm/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
+[![npm downloads](https://img.shields.io/npm/dw/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 [![npm version](https://img.shields.io/npm/v/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 
 [![Build Status](https://travis-ci.org/Orivoir/express-live-reloading.svg?branch=master)](https://travis-ci.org/Orivoir/express-live-reloading)
