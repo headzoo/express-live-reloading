@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/express-live-reloading.svg?style=for-the-badge)](https://www.npmjs.com/package/express-live-reloading)
 
 [![Build Status](https://travis-ci.org/Orivoir/express-live-reloading.svg?branch=master)](https://travis-ci.org/Orivoir/express-live-reloading)
+[![codecov](https://codecov.io/gh/Orivoir/express-live-reloading/branch/master/graph/badge.svg)](https://codecov.io/gh/Orivoir/express-live-reloading)
 
 > live reloading middleware express for **fast dev** .
 
