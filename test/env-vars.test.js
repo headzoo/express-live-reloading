@@ -59,7 +59,8 @@ describe('test contains env variables' , () => {
 
         describe('test `logs`' , () => {
 
-            it('should not be defined' , () => {
+            // now define to start exec with refactoring
+            it.skip('should not be defined' , () => {
 
                 expect( liveReload ).to.have.not.property( 'logs' ) ;
 
@@ -67,7 +68,6 @@ describe('test contains env variables' , () => {
 
             it('should defined' , () => {
 
-                liveReload.devUse = 42;
                 expect( liveReload ).to.have.property( 'logs' ) ;
             } ) ;
 
