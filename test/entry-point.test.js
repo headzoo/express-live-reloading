@@ -1,7 +1,6 @@
 const
     {assert} = require('chai')
     ,entryPointTest = require('./../lib/entry-point')
-    ,serverFactory = require('http').Server( () => {} )
 ;
 
 describe('test `entry-point` module' , () => {
@@ -12,18 +11,27 @@ describe('test `entry-point` module' , () => {
 
     } ) ;
 
+    let TCPAttach = entryPointTest() ;
+
     it('should be return Function' , () => {
 
-        assert.isFunction( entryPointTest( serverFactory ) ) ;
+        assert.isFunction( TCPAttach ) ;
 
     } ) ;
 
-    it.skip('should active env dev' , () => {
+    // it.skip('should active env dev' , () => {
 
-        entryPointTest( serverFactory , __dirname ) ;
+    //     assert.isTrue( process.liveReload.devUse ) ;
 
-        assert.isTrue( process.liveReload.devUse ) ;
+    // } ) ;
 
-    } ) ;
+    // it.skip('should not active env dev' , () => {
+
+    //     TCPAttach( serverFactory ) ;
+
+    //     assert.isFalse( process.liveReload.devUse ) ;
+
+    // } ) ;
+
 
 } ) ;
