@@ -2,7 +2,7 @@
  * @author S.Gaborieau <sam.gabor@hotmail.com>
  *
  * @package [npm] express-live-reloading
- * @version 0.8.855 `pre-stable version`
+ * @version 0.8.59 `pre-stable version`
  *
  * @git <https://github.com/Orivoir/express-live-reloading>
  * @npm <https://www.npmjs.com/package/express-live-reloading>
