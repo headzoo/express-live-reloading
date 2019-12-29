@@ -19,19 +19,4 @@ describe('test `entry-point` module' , () => {
 
     } ) ;
 
-    // it.skip('should active env dev' , () => {
-
-    //     assert.isTrue( process.liveReload.devUse ) ;
-
-    // } ) ;
-
-    // it.skip('should not active env dev' , () => {
-
-    //     TCPAttach( serverFactory ) ;
-
-    //     assert.isFalse( process.liveReload.devUse ) ;
-
-    // } ) ;
-
-
 } ) ;
