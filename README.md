@@ -11,7 +11,6 @@
 
 ![screen demo](./screenshot-demo.png)
 
-
 ### express live reloading watch only files call with your view file for best performances
 
 ### re start server is listen with `live-reload.js` for auto reload your view
@@ -32,7 +31,9 @@ const
     ,liveReload = require('express-live-reloading')( server )
 ;
 
-liveReload.static( 'public' )
+liveReload.static( 'public' ) ;
+
+liveReload.toolbar( true ) ; // active toolbar status live reload
 
 app
     .use( exp.static( 'public' ) )
@@ -63,7 +64,11 @@ server.listen( 80 , () => console.log("server run ...") ) ;
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+        <title>Super Document</title>
+
+        <!-- css status toolbar -->
+        <link rel="stylesheet" href="/toolbar-live-reload.css">
+
         <link rel="stylesheet" href="/index.css">
     </head>
 
@@ -132,7 +137,6 @@ server.listen( 80 , () => console.log("server run ...") ) ;
 
 ```
 
-
 ## you can define an views directory with
 
 ```javascript
@@ -174,6 +178,22 @@ app.get('/' , (req,res) => {
 } ) ;
 
 // ... ,
+```
+
+## the toolbar default values is `false`
+
+```javascript
+// , ...
+
+liveReload.toolbar( /* boolean default false */ true ) ; // active skeleton toolbar
+
+// , ...
+
+```
+
+```html
+<!-- css toolbar dist from middleware live reload -->
+<link rel="stylesheet" href="/toolbar-live-reload.css">
 ```
 
 #### develop by [Samuel Gaborieau](https://orivoir.github.io/profil-reactjs/) with **❤️** and **Nodejs** for **open source** and **enjoy**
